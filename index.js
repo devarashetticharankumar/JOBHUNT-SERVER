@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
+////////////////////
+
 // Check environment variables
 if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
   console.error("Missing required environment variables.");

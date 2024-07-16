@@ -53,6 +53,66 @@ router.get("/all-jobs/:id", async (req, res) => {
   }
 });
 
+// const nodemailer = require("nodemailer");
+
+// // Configure Nodemailer
+// const transporter = nodemailer.createTransport({
+//   service: "Gmail", // or any other email service
+//   host: "smtp.gmail.com",
+//   port: 587,
+//   secure: false, // true for 465, false for other ports
+//   auth: {
+//     user: process.env.EMAIL_USER, // your email
+//     pass: process.env.EMAIL_PASS, // your email password
+//   },
+// });
+
+// // Function to send email
+// const sendEmailNotification = (to, subject, text) => {
+//   const mailOptions = {
+//     from: process.env.EMAIL_USER,
+//     to,
+//     subject,
+//     text,
+//   };
+
+//   return transporter.sendMail(mailOptions);
+// };
+
+// // Get a single job by ID and send email notification
+// router.get("/all-jobs/:id", async (req, res) => {
+//   const db = req.app.locals.db;
+//   const jobCollections = db.collection("demoJobs");
+//   const subscriptionsCollection = db.collection("EmailSubscriptions");
+
+//   try {
+//     const id = req.params.id;
+//     const job = await jobCollections.findOne({ _id: new ObjectId(id) });
+
+//     if (job) {
+//       // Find all subscribed emails
+//       const subscribers = await subscriptionsCollection.find({}).toArray();
+//       const emailList = subscribers.map((subscriber) => subscriber.email);
+
+//       // Prepare the email notification content
+//       const subject = `New Job Alert: ${job.title}`;
+//       const text = `Hi,\n\nA new job has been posted that might interest you.\n\nJob Title: ${job.title}\nDescription: ${job.description}\n\nBest regards,\nYour Job Portal`;
+
+//       // Send email notification to all subscribers
+//       await Promise.all(
+//         emailList.map((email) => sendEmailNotification(email, subject, text))
+//       );
+
+//       res.send(job);
+//     } else {
+//       res.status(404).send({ message: "Job not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error getting job:", error);
+//     res.status(500).send({ message: "Server error", error });
+//   }
+// });
+
 // Get jobs by email
 router.get("/myJobs/:email", async (req, res) => {
   const db = req.app.locals.db;
