@@ -147,6 +147,27 @@ router.delete("/job/:id", async (req, res) => {
 });
 
 // Update a job
+// router.patch("/update-job/:id", async (req, res) => {
+//   const db = req.app.locals.db;
+//   const jobCollections = db.collection("demoJobs");
+//   try {
+//     const id = req.params.id;
+//     const jobData = req.body;
+//     const result = await jobCollections.updateOne(
+//       { _id: new ObjectId(id) },
+//       { $set: jobData },
+//       { upsert: true }
+//     );
+//     if (result.matchedCount === 1) {
+//       res.send({ message: "Job updated successfully" });
+//     } else {
+//       res.status(404).send({ message: "Job not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error updating job:", error);
+//     res.status(500).send({ message: "Server error", error });
+//   }
+// });
 router.patch("/update-job/:id", async (req, res) => {
   const db = req.app.locals.db;
   const jobCollections = db.collection("demoJobs");
@@ -158,15 +179,17 @@ router.patch("/update-job/:id", async (req, res) => {
       { $set: jobData },
       { upsert: true }
     );
+
     if (result.matchedCount === 1) {
-      res.send({ message: "Job updated successfully" });
+      res.send({ acknowledged: true, message: "Job updated successfully" });
     } else {
-      res.status(404).send({ message: "Job not found" });
+      res.status(404).send({ acknowledged: false, message: "Job not found" });
     }
   } catch (error) {
     console.error("Error updating job:", error);
-    res.status(500).send({ message: "Server error", error });
+    res
+      .status(500)
+      .send({ acknowledged: false, message: "Server error", error });
   }
 });
-
 module.exports = router;
