@@ -18,7 +18,7 @@ router.post(
       if (existingSubscription) {
         return res
           .status(400)
-          .send({ message: "Email already subscribed 😒", status: false });
+          .send({ message: "Email already subscribed", status: false });
       }
 
       const result = await subscriptionsCollection.insertOne({
@@ -55,7 +55,7 @@ router.post(
       if (result.deletedCount === 1) {
         res
           .status(200)
-          .send({ message: "Unsubscription successful", status: true });
+          .send({ message: "Unsubscription successful 🤦", status: true });
       } else {
         res.status(404).send({ message: "Email not found", status: false });
       }
